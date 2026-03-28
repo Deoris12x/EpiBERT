@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - claude/browser-automation-control-OvY9S
-    paths:
-      - 'fetch_nuclear_proteome_idrs.py'
 
 jobs:
   run-analysis:
