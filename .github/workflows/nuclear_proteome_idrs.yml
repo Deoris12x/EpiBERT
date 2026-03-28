@@ -1,0 +1,44 @@
+name: Nuclear Proteome IDR Analysis
+
+on:
+  workflow_dispatch:  # Manual trigger from GitHub UI (click "Run workflow")
+  push:
+    branches:
+      - claude/browser-automation-control-OvY9S
+    paths:
+      - 'fetch_nuclear_proteome_idrs.py'
+
+jobs:
+  run-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install metapredict requests biopython
+
+      - name: Run nuclear proteome IDR analysis
+        run: python fetch_nuclear_proteome_idrs.py
+
+      - name: Upload results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuclear-proteome-idrs
+          path: nuclear_proteome_idrs/
+          retention-days: 90
+
+      - name: Commit results back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add nuclear_proteome_idrs/
+          git diff --staged --quiet || git commit -m "Add nuclear proteome IDR analysis results [automated]"
+          git push
