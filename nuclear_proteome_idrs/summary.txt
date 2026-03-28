@@ -1,0 +1,8 @@
+Nuclear Proteome IDR Analysis Summary
+========================================
+Total nuclear proteins queried: 5742
+Proteins with IDRs: 5245
+Total IDR regions found: 10929
+Average IDRs per protein: 2.08
+Average IDR length: 143.8 residues
+Processing errors: 3
